@@ -2,15 +2,26 @@
 
 require_once 'AppController.php';
 
-class DefaultController extends AppController {
+class DefaultController extends AppController
+{
 
     public function index()
     {
-        $this->render('index');
+        $this->render('onboarding');
     }
 
-    public function login()
+    public function signin()
     {
-        $this->render('login');
+        $this->render('signin');
+    }
+
+    public function signup()
+    {
+        $this->render('signup');
+    }
+
+    public function dreamslist()
+    {
+        $this->render('dreamslist');
     }
 }

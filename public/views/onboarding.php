@@ -23,8 +23,8 @@
             <p class="moonline-repr_slogan">Your personal dream journal</p>
         </div>
         <div class="onboarding">
-            <a href="signin"><button class="onboarding__btn btn--purple">Sign in</button></a>
-            <a href="login"><button class="onboarding__btn btn--dark">Log in</button></a>
+            <a href="signup"><button class="onboarding__btn btn--purple">Sign up</button></a>
+            <a href="signin"><button class="onboarding__btn btn--dark">Sign in</button></a>
         </div>
     </main>
 </body>
