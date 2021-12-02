@@ -7,6 +7,13 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dreams</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/dreams.css">
 </head>
 
 <body>
@@ -17,17 +24,24 @@
     <nav class="toggle">
         <ul>
             <li class="toggle__list toggle--active">
-                <img class="toggle__list__icon toggle--active" src="/public/img/list_icon.svg" alt="list icon">
-                <p class="toggle__list__name toggle--active">List</p>
+                <div class="toggle__wrapper">
+                    <img class="toggle__list__icon toggle--active" src="/public/img/list_purple_icon.svg"
+                        alt="list icon">
+                    <p class="toggle__list__name toggle--active">List</p>
+                </div>
             </li>
-            <li class="toggle__calendar">
-                <img class="toggle__calendar__icon" src="/public/img/calendar_icon.svg" alt="calendar icon">
-                <p class="toggle__calendar__name">Calendar</p>
-            </li>
+            <a href="">
+                <li class="toggle__calendar">
+                    <div class="toggle__wrapper">
+                        <img class="toggle__calendar__icon" src="/public/img/calendar_icon.svg" alt="calendar icon">
+                        <p class="toggle__calendar__name">Calendar</p>
+                    </div>
+                </li>
+            </a>
         </ul>
     </nav>
     <main>
-        <a href="#">
+        <a href="#" class="link-btn-add-dream">
             <button class="btn-add-dream">
                 <img class="btn-add-dream__icon" src="/public/img/plus_icon.svg" alt="plus icon">
             </button>
@@ -36,7 +50,7 @@
             <div class="dreams__dream-day">
                 <p class="dreams__dream-day__date">27 Nov 2021</p>
                 <div class="dreams__dream-day__dream">
-                    <h1 class="dreams__dream-day__dream__title">Title</h1>
+                    <h1 class="dreams__dream-day__dream__title">Title dvbhdfhdbjfkjdnvdfkv</h1>
                     <div class="dreams__dream-day__dream__options">
                         <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg"
                             alt="options icon">

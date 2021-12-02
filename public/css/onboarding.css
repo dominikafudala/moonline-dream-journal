@@ -60,7 +60,7 @@
 .back {
     position: relative;
     height: 68px;
-    margin-left: 7.5vw;
+    margin-left: 24px;
 }
 
 .back_btn {
@@ -81,7 +81,7 @@
 }
 
 .account-onboarding {
-    margin: 0 7.5vw;
+    margin: 0 24px;
 }
 
 .account-onboarding__header {
