@@ -46,40 +46,6 @@
     font-weight: 700;
 }
 
-.btn--purple {
-    background-color: var(--purple-primary);
-    color: var(--dark-theme-900);
-}
-
-.btn--dark {
-    background-color: var(--dark-theme-900);
-    color: var(--purple-primary);
-    border: 1px solid #363D4A;
-}
-
-.back {
-    position: relative;
-    height: 68px;
-    margin-left: 24px;
-}
-
-.back_btn {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 44px;
-    background-color: transparent;
-    color: var(--gray-200);
-}
-
-.back_btn_text {
-    padding-left: 8px;
-    font-weight: 700;
-}
-
 .account-onboarding {
     margin: 0 24px;
 }

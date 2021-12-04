@@ -8,10 +8,9 @@
     <title>moonline</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="/public/css/style.css">
-    <link rel="stylesheet" href="/public/css/onboarding.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/public/css/style.css">
+    <link type="text/css" rel="stylesheet" href="/public/css/onboarding.css">
     <script defer src="/public/js/resize.js"></script>
 </head>
 

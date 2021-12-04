@@ -8,22 +8,23 @@
     <title>Sign in</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/public/css/style.css">
-    <link rel="stylesheet" href="/public/css/onboarding.css">
+    <link type="text/css" rel="stylesheet" href="/public/css/style.css">
+    <link type="text/css" rel="stylesheet" href="/public/css/onboarding.css">
 </head>
 
 <body>
-    <div class="back">
-        <a href="./">
-            <button class="back_btn">
-                <img class="back__btn__arrow" src="/public/img/navigate_before.svg" alt="Navigate before arrow">
-                <p class="back_btn_text">Back</p>
-            </button>
-        </a>
-    </div>
+    <header>
+        <div class="back">
+            <a href="./">
+                <button class="back_btn">
+                    <img class="back__btn__arrow" src="/public/img/navigate_before.svg" alt="Navigate before arrow">
+                    <p class="back_btn_text">Back</p>
+                </button>
+            </a>
+        </div>
+    </header>
     <main class="account-onboarding">
         <h1 class="account-onboarding__header">Sign in</h1>
         <form action="" class="account-onboarding__form">

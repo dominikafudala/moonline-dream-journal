@@ -14,6 +14,9 @@ html {
 :root {
     --yellow-secondary: #FFFAEB;
     --purple-primary: #B692F6;
+    --purple-primary-600: #7F56D9;
+    --purple-primary-500: #9E77ED;
+    --purple-primary-900: #42307D;
     --dark-theme-900: #101828;
     --dark-theme-800: #1C2433;
     --dark-theme-700: #212837;
@@ -21,7 +24,9 @@ html {
     --dark-theme-400: #262D3B;
     --gray-25: #FCFCFD;
     --gray-50: #F9FAFB;
+    --gray-100: #F2F4F7;
     --gray-200: #E4E7EC;
+    --gray-300: #D0D5DD;
     --gray-400: #98A2B3;
     --gray-500: #667085;
     --vh: 1vh;
@@ -30,6 +35,14 @@ html {
 body {
     background-color: var(--dark-theme-900);
     font-family: 'Nunito Sans', sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 48px;
+    margin: 8px 24px 10px;
 }
 
 button {
@@ -42,13 +55,19 @@ h1 {
     font-family: 'Nunito', sans-serif;
 }
 
+h2 {
+    color: var(--gray-100);
+    font-family: 'Nunito Sans', sans-serif;
+}
+
 .input-wrapper {
     display: flex;
     flex-direction: column-reverse;
     width: 100%;
 }
 
-input {
+input,
+textarea {
     padding: 8px;
     font-family: 'Nunito Sans', sans-serif;
     background-color: var(--dark-theme-800);
@@ -57,11 +76,13 @@ input {
     color: var(--gray-25);
 }
 
-input:hover {
+input:hover,
+textarea:hover {
     border: 1px solid #667085;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
     outline: none;
     border: 1px solid var(--purple-primary);
 }
@@ -72,10 +93,55 @@ label {
     line-height: 1.5rem;
 }
 
-input:hover+label {
+input:hover+label,
+textarea:hover+label {
     color: var(--gray-200);
 }
 
-input:focus+label {
+input:focus+label,
+textarea:focus+label {
     color: var(--purple-primary);
+}
+
+
+
+.back {
+    position: relative;
+    height: 48px;
+    width: 56px;
+}
+
+.back_btn {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    color: var(--gray-200);
+}
+
+.back_btn_text {
+    padding-left: 8px;
+    font-weight: 700;
+}
+
+.btn--purple {
+    background-color: var(--purple-primary);
+    color: var(--dark-theme-900);
+}
+
+.btn--dark {
+    background-color: var(--dark-theme-900);
+    color: var(--purple-primary);
+    border: 1px solid #363D4A;
+}
+
+.btn--gray {
+    background-color: var(--dark-theme-800);
+    color: var(--purple-primary);
+    border: 1px solid var(--dark-theme-500);
 }

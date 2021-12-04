@@ -24,4 +24,14 @@ class DefaultController extends AppController
     {
         $this->render('dreamslist');
     }
+
+    public function dream()
+    {
+        $this->render('dream');
+    }
+
+    public function form_story()
+    {
+        $this->render('form_story');
+    }
 }
