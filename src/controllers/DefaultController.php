@@ -34,4 +34,14 @@ class DefaultController extends AppController
     {
         $this->render('form_story');
     }
+
+    public function form_emotions()
+    {
+        $this->render('form_emotions');
+    }
+
+    public function form_notes()
+    {
+        $this->render('form_notes');
+    }
 }

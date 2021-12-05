@@ -14,14 +14,17 @@ html {
 :root {
     --yellow-secondary: #FFFAEB;
     --purple-primary: #B692F6;
-    --purple-primary-600: #7F56D9;
+    --purple-primary-400: #B692F6;
     --purple-primary-500: #9E77ED;
+    --purple-primary-600: #7F56D9;
     --purple-primary-900: #42307D;
     --dark-theme-900: #101828;
     --dark-theme-800: #1C2433;
     --dark-theme-700: #212837;
     --dark-theme-500: #262D3B;
     --dark-theme-400: #262D3B;
+    --dark-theme-100: #343B48;
+    --dark-theme-40: #363D4A;
     --gray-25: #FCFCFD;
     --gray-50: #F9FAFB;
     --gray-100: #F2F4F7;
@@ -64,6 +67,11 @@ h2 {
     display: flex;
     flex-direction: column-reverse;
     width: 100%;
+}
+
+textarea {
+    resize: none;
+    overflow: hidden;
 }
 
 input,

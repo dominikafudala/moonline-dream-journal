@@ -41,7 +41,7 @@
         </ul>
     </nav>
     <main>
-        <a href="#" class="link-btn-add-dream">
+        <a href="form_story" class="link-btn-add-dream">
             <img class="link-btn-add-dream__icon" src="/public/img/plus_icon.svg" alt="plus icon">
         </a>
         <section class="dreams">
