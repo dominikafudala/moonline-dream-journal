@@ -10,8 +10,6 @@ Router::get('signin', 'DefaultController');
 Router::get('signup', 'DefaultController');
 Router::get('dreamslist', 'DefaultController');
 Router::get('dream', 'DefaultController');
-Router::get('form_story', 'DefaultController');
-Router::get('form_emotions', 'DefaultController');
-Router::get('form_notes', 'DefaultController');
+Router::get('adddream', 'DefaultController');
 
 Router::run($path);

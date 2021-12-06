@@ -1,3 +1,12 @@
+body {
+    overflow-x: hidden;
+}
+
+.form-wrapper {
+    max-width: 822px;
+    margin: 0 auto;
+}
+
 .save-btn {
     display: flex;
     justify-content: center;
@@ -15,15 +24,23 @@
 
 .dream-form {
     margin: 0 24px;
+    position: relative;
+    min-height: calc(100vh - 66px);
 }
 
 .dream-form__header {
+    position: absolute;
+    top: 0;
     font-size: 1.5rem;
     margin: 8px 0;
+    transition: .3s;
 }
 
 .dream-form__dots {
     font-size: 0;
+    position: absolute;
+    top: 48px;
+    left: 0;
 }
 
 .dream-form__dots__dot {
@@ -36,11 +53,28 @@
 }
 
 .dream-form__dots__dot.dot--active {
+    transition: .5s;
     background-color: var(--purple-primary-500);
 }
 
-.dream-form__form {
+.step {
+    position: absolute;
+    width: 100%;
+    top: 66px;
     margin: 16px 0;
+    transition: .3s;
+}
+
+.story-form {
+    left: 0;
+    opacity: 1;
+}
+
+
+.emotions-form,
+.notes-form {
+    left: 100vw;
+    opacity: 0;
 }
 
 .dream-form__form__input {
@@ -68,11 +102,9 @@
     width: 132px;
     height: 40px;
     border-radius: 100px;
+    margin: 16px 0;
 }
 
-a {
-    text-decoration: none;
-}
 
 .dream-form__next-step__btn_text {
     font-size: 1rem;
@@ -85,7 +117,6 @@ a {
     flex-wrap: wrap;
     justify-content: space-between;
     margin: 0 auto;
-    margin-top: 24px;
 }
 
 .emotion-checkbox__label {
