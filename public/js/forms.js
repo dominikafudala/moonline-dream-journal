@@ -1,6 +1,8 @@
 const nightmareIcons = document.querySelectorAll('.nightmare__checkbox');
 const textareas = document.querySelectorAll(".input--longer");
 
+const requiredElements = document.querySelectorAll("[required]");
+
 const btns = document.querySelectorAll(".dream-form__next-step__btn");
 const divSteps = document.querySelectorAll("div.step");
 const dots = document.querySelectorAll(".dream-form__dots__dot");
@@ -25,7 +27,7 @@ function resizeTextarea(e) {
 }
 
 function updateDots() {
-    dots.forEach((dot) => console.log(dot.classList.remove("dot--active")));
+    dots.forEach((dot) => dot.classList.remove("dot--active"));
     dots[stepCounter].classList.add("dot--active");
 }
 
@@ -95,6 +97,15 @@ function changeToInvalidInput() {
     }
 }
 
+//add error class to required and empty fields 
+function addErrorClass() {
+    requiredElements.forEach((elem) => {
+        if (elem.value == null || elem.value == "") {
+            console.log('invalid');
+        }
+    })
+}
+
 nightmareIcons.forEach((icon) =>
     icon.addEventListener("click", changeIconIfChecked)
 );
@@ -112,3 +123,9 @@ btns.forEach((btn) =>
 document.querySelector(".step-back").addEventListener("click", changeStepBack);
 
 document.querySelector(".save-btn").addEventListener("click", changeToInvalidInput);
+
+//prevent default event for invalid and add custom behaviour
+document.addEventListener('invalid', (e) => {
+    e.preventDefault();
+    addErrorClass();
+}, true);

@@ -48,11 +48,19 @@
 
 .account-onboarding {
     margin: 0 24px;
+    position: relative;
 }
 
 .account-onboarding__header {
     margin-bottom: 24px;
     font-size: 2.25rem;
+}
+
+.wrong-credentials{
+    height: 24px;
+    margin: 0 auto 16px;
+    text-align: center;
+    color: var(--error-500);
 }
 
 .account-onboarding__form {

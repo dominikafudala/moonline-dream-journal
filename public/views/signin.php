@@ -27,14 +27,25 @@
     </header>
     <main class="account-onboarding">
         <h1 class="account-onboarding__header">Sign in</h1>
-        <form action="" class="account-onboarding__form">
+        <form action="signin" class="account-onboarding__form" method = "POST">
             <div class="input-wrapper">
-                <input id="username" name="username" type="text" class="account-onboarding__form__input">
+                <input id="username" name="username" type="text" class="account-onboarding__form__input" required>
                 <label for="username" class="account-onboarding__form__label">Username or e-mail</label>
             </div>
             <div class="input-wrapper">
-                <input id="password" name="password" type="password" class="account-onboarding__form__input">
+                <input id="password" name="password" type="password" class="account-onboarding__form__input" required>
                 <label for="password" class="account-onboarding__form__label">Password</label>
+            </div>
+            <div class = "wrong-credentials">
+                <p>
+                    <?php
+                    if(isset($messages)){
+                        foreach($messages as $message) {
+                            echo $message;
+                        }
+                    }
+                    ?>
+                </p>
             </div>
             <button class="onboarding__btn btn--purple" type="submit">Let's go</button>
             <a class="account-onboarding__action-instead" href="signup">Sign up instead</a>

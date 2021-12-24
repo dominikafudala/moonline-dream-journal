@@ -38,7 +38,7 @@
                 <div class="dream-form__dots__dot"></div>
                 <div class="dream-form__dots__dot"></div>
             </div>
-            <form id="dream-form__form" action="" class="dream-form__form">
+            <form id="dream-form__form" action="addDream" class="dream-form__form" method="POST">
                 <div class="story-form step">
                     <div class="input-wrapper">
                         <input id="date" name="date" type="date" class="dream-form__form__input" required>

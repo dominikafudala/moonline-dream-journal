@@ -11,5 +11,7 @@ Router::get('signup', 'DefaultController');
 Router::get('dreamslist', 'DefaultController');
 Router::get('dream', 'DefaultController');
 Router::get('adddream', 'DefaultController');
+Router::post('signin', 'SecurityController');
+Router::post('addDream', 'DreamController');
 
 Router::run($path);

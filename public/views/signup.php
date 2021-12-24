@@ -27,7 +27,7 @@
     </header>
     <main class="account-onboarding">
         <h1 class="account-onboarding__header">Sign up</h1>
-        <form action="" class="account-onboarding__form">
+        <form action="signup" class="account-onboarding__form">
             <div class="input-wrapper">
                 <input id="username" name="username" type="text" class="account-onboarding__form__input">
                 <label for="username" class="account-onboarding__form__label">Username</label>
