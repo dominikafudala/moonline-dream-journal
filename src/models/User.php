@@ -4,6 +4,7 @@ class User {
     private $email;
     private $password;
     private $username;
+    private $avatarUrl = "";
 
     public function __construct(
         string $username,
@@ -30,4 +31,11 @@ class User {
     {
         return $this->password;
     }
+
+    public function setAvatarUrl(string $avatarUrl)
+    {
+        $this->avatarUrl = $avatarUrl;
+    }
+
+
 }
