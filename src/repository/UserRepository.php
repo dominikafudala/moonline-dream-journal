@@ -8,7 +8,7 @@ class UserRepository extends Repository
     public function getUser(string $username): ?User
     {
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.user WHERE email = :username OR username = :username
+            SELECT * FROM public.users WHERE email = :username OR username = :username
         ');
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();

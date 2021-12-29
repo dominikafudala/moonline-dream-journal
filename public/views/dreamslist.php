@@ -45,6 +45,22 @@
             <img class="link-btn-add-dream__icon" src="/public/img/plus_icon.svg" alt="plus icon">
         </a>
         <section class="dreams">
+            <?php foreach ($dreams as $dream) : ?>
+                <div class="dreams__dream-day">
+                    <p class="dreams__dream-day__date"><?= $dream->getDate(); ?></p>
+                    <a href="dream" class="dreams__dream-day__dream">
+                        <h1 class="dreams__dream-day__dream__title"><?= $dream->getTitle(); ?></h1>
+                        <div class="dreams__dream-day__dream__options">
+                            <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg" alt="options icon">
+                        </div>
+                        <p class="dreams__dream-day__dream__story">
+                            <?= $dream->getStory(); ?>
+                        </p>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+
+
             <div class="dreams__dream-day">
                 <p class="dreams__dream-day__date">27 Nov 2021</p>
                 <a href="dream" class="dreams__dream-day__dream">

@@ -84,7 +84,8 @@ body {
 }
 
 .input-wrapper:nth-child(1) .dream-form__form__input {
-    width: 124px;
+    width: min-content;
+    max-width: 140px;
 }
 
 .input--longer {
