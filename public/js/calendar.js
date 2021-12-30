@@ -38,6 +38,8 @@ function renderCalendar() {
         0 // getting last day of previous month
     )
 
+    console.log(thisMonthLastDay);
+
     const lastDayCurrentMonth = thisMonthLastDay.getDate();
 
     const lastDayLastMonth = new Date(
@@ -46,8 +48,11 @@ function renderCalendar() {
         0
     ).getDate();
 
-    const dayOfWeekStart = date.getDay();
-    const dayOfWeekEnd = thisMonthLastDay.getDay();
+    let dayOfWeekStart = date.getDay();
+    let dayOfWeekEnd = thisMonthLastDay.getDay();
+
+    if (dayOfWeekStart == 0) dayOfWeekStart = 7; // if date is sunday change index to 7
+    if (dayOfWeekEnd == 0) dayOfWeekEnd = 7;
 
     for (let i = dayOfWeekStart - 1; i > 0; i--) {
         const dayNum = lastDayLastMonth - i + 1; // get numbers of previous month in chronological order
@@ -73,7 +78,7 @@ function renderCalendar() {
 
     let monthNext = 1;
 
-    for (let i = dayOfWeekEnd; i < 7; i++) {
+    for (let i = dayOfWeekEnd + 1; i <= 7; i++) {
         const dateNew = new Date(date.getFullYear(), date.getMonth() - 1, monthNext);
         const newDiv = createNewDateElement('day--inactive', monthNext, dateNew);
         days.push(newDiv);
