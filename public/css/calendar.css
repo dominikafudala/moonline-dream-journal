@@ -1,0 +1,109 @@
+.calendar {
+    width: 252px;
+    min-height: 226px;
+    margin: 24px auto 0;
+}
+
+.calendar__nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 28px;
+}
+
+.calendar__nav__month h1 {
+    font-size: 1.125rem;
+    font-weight: 800;
+}
+
+.calendar__nav__arrows {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 40px;
+}
+
+.calendar__nav__arrows__arrow {
+    cursor: pointer;
+}
+
+.calendar__weekdays {
+    display: flex;
+    align-items: center;
+    height: 36px;
+}
+
+.calendar__weekdays div {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: var(--gray-50);
+}
+
+.calendar__days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-top: 1px solid var(--dark-theme-800);
+    border-left: 1px solid var(--dark-theme-800);
+}
+
+.calendar__days div {
+    height: 36px;
+    width: 36px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-align: center;
+    line-height: 36px;
+    border-bottom: 1px solid var(--dark-theme-800);
+    border-right: 1px solid var(--dark-theme-800);
+    color: var(--gray-50);
+    position: relative;
+    cursor: pointer;
+}
+
+.calendar__days div.day--inactive {
+    color: var(--dark-theme-800);
+    cursor: auto;
+}
+
+.calendar__days div.day--today {
+    color: var(--gray-900);
+}
+
+.calendar__days div.day--today::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 35px;
+    height: 35px;
+    background-color: var(--purple-primary-500);
+    border-radius: 4px;
+    z-index: -1;
+}
+
+.calendar__days div.day--dreams::after {
+    content: '';
+    position: absolute;
+    top: 78%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    width: 2px;
+    border-radius: 50%;
+    background-color: var(--yellow-100);
+}
+
+.calendar__days div.day--clicked::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 35px;
+    height: 35px;
+    border: 2px solid var(--purple-primary-500);
+    border-radius: 4px;
+    z-index: -1;
+}

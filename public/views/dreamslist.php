@@ -24,12 +24,14 @@
     </header>
     <nav class="toggle">
         <ul>
-            <li class="toggle__list toggle--active">
-                <div class="toggle__wrapper">
-                    <img class="toggle__list__icon toggle--active" src="/public/img/list_purple_icon.svg" alt="list icon">
-                    <p class="toggle__list__name toggle--active">List</p>
-                </div>
-            </li>
+            <a href="">
+                <li class="toggle__list toggle--active">
+                    <div class="toggle__wrapper">
+                        <img class="toggle__list__icon toggle--active" src="/public/img/list_purple_icon.svg" alt="list icon">
+                        <p class="toggle__list__name toggle--active">List</p>
+                    </div>
+                </li>
+            </a>
             <a href="">
                 <li class="toggle__calendar">
                     <div class="toggle__wrapper">
