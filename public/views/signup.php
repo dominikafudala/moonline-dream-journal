@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="/public/css/style.css">
     <link type="text/css" rel="stylesheet" href="/public/css/onboarding.css">
+    <script defer src="/public/js/register.js"></script>
 </head>
 
 <body>
@@ -27,22 +28,33 @@
     </header>
     <main class="account-onboarding">
         <h1 class="account-onboarding__header">Sign up</h1>
-        <form action="signup" class="account-onboarding__form">
+        <form action="signup" class="account-onboarding__form" method = "POST">
             <div class="input-wrapper">
-                <input id="username" name="username" type="text" class="account-onboarding__form__input">
+                <input id="username" name="username" type="text" class="account-onboarding__form__input" required>
                 <label for="username" class="account-onboarding__form__label">Username</label>
             </div>
             <div class="input-wrapper">
-                <input id="email" name="email" type="email" class="account-onboarding__form__input">
+                <input id="email" name="email" type="email" class="account-onboarding__form__input" required>
                 <label for="email" class="account-onboarding__form__label">E-mail</label>
             </div>
             <div class="input-wrapper">
-                <input id="password" name="password" type="password" class="account-onboarding__form__input">
+                <input id="password" name="password" type="password" class="account-onboarding__form__input" required>
                 <label for="password" class="account-onboarding__form__label">Password</label>
             </div>
             <div class="input-wrapper">
-                <input id="repeat-password" name="repeat-password" type="password" class="account-onboarding__form__input">
+                <input id="repeat-password" name="repeat-password" type="password" class="account-onboarding__form__input" required>
                 <label for="repeat-password" class="account-onboarding__form__label">Repeat password</label>
+            </div>
+            <div class="wrong-credentials">
+                <p>
+                    <?php
+                    if (isset($messages)) {
+                        foreach ($messages as $message) {
+                            echo $message;
+                        }
+                    }
+                    ?>
+                </p>
             </div>
             <button class="onboarding__btn btn--purple" type="submit">Let's go</button>
             <a class="account-onboarding__action-instead" href="signin">Sign in instead</a>

@@ -27,7 +27,18 @@
     </header>
     <main class="account-onboarding">
         <h1 class="account-onboarding__header">Sign in</h1>
-        <form action="signin" class="account-onboarding__form" method = "POST">
+        <div class="succesaful-login">
+            <p>
+                <?php
+                if (isset($success)) {
+                    foreach ($success as $message) {
+                        echo $message;
+                    }
+                }
+                ?>
+            </p>
+        </div>
+        <form action="signin" class="account-onboarding__form" method="POST">
             <div class="input-wrapper">
                 <input id="username" name="username" type="text" class="account-onboarding__form__input" required>
                 <label for="username" class="account-onboarding__form__label">Username or e-mail</label>
@@ -36,11 +47,11 @@
                 <input id="password" name="password" type="password" class="account-onboarding__form__input" required>
                 <label for="password" class="account-onboarding__form__label">Password</label>
             </div>
-            <div class = "wrong-credentials">
+            <div class="wrong-credentials">
                 <p>
                     <?php
-                    if(isset($messages)){
-                        foreach($messages as $message) {
+                    if (isset($messages)) {
+                        foreach ($messages as $message) {
                             echo $message;
                         }
                     }

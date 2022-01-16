@@ -36,7 +36,7 @@ class DreamRepository extends Repository
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ');
 
-        $userID = 1;
+        $userID = $this->getUserId();
 
         $stmt->execute([
             $userID,
@@ -47,21 +47,39 @@ class DreamRepository extends Repository
             $dream->getMoonphase(),
             $dream->getNote()
         ]);
+
     }
 
+    public function getByDate(string $date)
+    {
+        $userID = $this->getUserId();
 
-    public function getDreams(): array
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM public.dreams WHERE "userID" = :user AND date = :date ORDER BY "dreamID" DESC;
+        ');
+        $stmt->bindParam(':user', $userID, PDO::PARAM_INT);
+        $stmt->bindParam(':date', $date);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getDreamsByDate(string $date):array
     {
         $result = [];
 
+        $userID = $this->getUserId();
+
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.dreams WHERE "userID" = 1;
+            SELECT * FROM public.dreams WHERE "userID" = :user AND date = :date ORDER BY "dreamID" DESC;
         ');
+        $stmt->bindParam(':user', $userID, PDO::PARAM_INT);
+        $stmt->bindParam(':date', $date);
         $stmt->execute();
         $dreams = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($dreams as $dream) {
-            $result[] = new Dream(
+            $new_dream = new Dream(
                 $dream['date'],
                 $dream['title'],
                 $dream['story'],
@@ -69,8 +87,47 @@ class DreamRepository extends Repository
                 $dream['moonphaseID'],
                 $dream['note']
             );
+            $new_dream->setId($dream["dreamID"]);
+            $result[] = $new_dream;
         }
 
         return $result;
+    }
+    public function getDreams(): array
+    {
+        $result = [];
+
+        $userID = $this->getUserId();
+
+        $stmt = $this->database->connect()->prepare('
+            SELECT date FROM public.dreams WHERE "userID" = :user GROUP BY date ORDER BY date DESC;
+        ');
+
+
+        $stmt->bindParam(':user', $userID, PDO::PARAM_INT);
+        $stmt->execute();
+        $dates = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($dates as $date) {
+            $new_date = $date['date'];
+            $result[] = $new_date;
+            $result[$new_date] = $this->getDreamsByDate($new_date);
+        }
+
+        return $result;
+    }
+
+    private function getUserId(): int{
+
+        session_start();
+        session_write_close();
+
+        $stmt = $this->database->connect()->prepare('
+            SELECT "userID" FROM users
+            WHERE username = :username
+        ');
+        $stmt->bindParam(':username', $_SESSION["u"]);
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 }

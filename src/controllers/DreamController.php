@@ -15,28 +15,69 @@ class DreamController extends AppController
         $this->dreamRepository = new DreamRepository();
     }
 
+    public function calendar()
+    {
+        session_start();
+
+        session_write_close();
+
+        if(isset($_SESSION["u"])){
+            $url = "http://$_SERVER[HTTP_HOST]";
+            $this->render('calendar');
+        }else{
+            $this->render('onboarding');
+        }
+    }
+
     public function dreamslist()
     {
-        $dreams = $this->dreamRepository->getDreams();
-        $this->render('dreamslist', ['dreams' => $dreams]);
+        session_start();
+        session_write_close();
+        if(isset($_SESSION["u"])){
+            $dates = $this->dreamRepository->getDreams();
+            $this->render('dreamslist', ['dates' => $dates]);
+        }
+        else {
+            //TODO: render no permission page or smth like this
+            $this->render('onboarding');
+        }
     }
 
 
-    public function addDream()
+    public function adddream()
     {
+
+         if ($this->isGet()) {
+             return $this->render('adddream');
+         }
 
         if ($this->isPost()) {
             $nightmare = $_POST['nightmare'];
             $nightmareBool = false;
-            if($nightmare == "yes"){
+            if ($nightmare == "yes") {
                 $nightmareBool = true;
             }
-            $dream = new Dream($_POST['date'], $_POST['title'], $_POST['story'], $nightmareBool , 1, $_POST['notes']);
+            $dream = new Dream($_POST['date'], $_POST['title'], $_POST['story'], $nightmareBool, 1, $_POST['notes']);
             $this->dreamRepository->addDream($dream);
-            return $this->render('dreamslist', ['messages' => ['Did it'],
-                'dreams' => $this->dreamRepository->getDreams()
-            ]);
+
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/dreamslist");
         }
-        return $this->render('adddream', ['messages' => ['Nope']]);
+        return $this->render('adddream', []);
+    }
+
+    public function date()
+    {
+        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+
+        if ($contentType === "application/json") {
+            $content = trim(file_get_contents("php://input"));
+            $decoded = json_decode($content, true);
+
+            header('Content-type: application/json');
+            http_response_code(200);
+
+            echo json_encode($this->dreamRepository->getByDate($decoded['date']));
+        }
     }
 }

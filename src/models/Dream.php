@@ -7,12 +7,15 @@ class Dream{
     private $nightmare;
     private $moonphase;
     private $note;
+    private $id =-1;
+
     public function __construct(string $date,
                                 string $title,
                                 string $story,
                                 int $nightmare,
                                 int $moonphase,
-                                string $note)
+                                string $note
+                                )
     {
         $this->date = $date;
         $this->title = $title;
@@ -82,6 +85,20 @@ class Dream{
     {
         $this->note = $note;
     }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+    }
+
+
+
+
 
 
 }

@@ -1,5 +1,6 @@
 const date = new Date();
 const currentDate = new Date();
+const dreamsContainer = document.querySelector('.dreams');
 
 function createNewDateElement(className, num, date) {
     const div = document.createElement("div");
@@ -38,8 +39,6 @@ function renderCalendar() {
         0 // getting last day of previous month
     )
 
-    console.log(thisMonthLastDay);
-
     const lastDayCurrentMonth = thisMonthLastDay.getDate();
 
     const lastDayLastMonth = new Date(
@@ -69,6 +68,7 @@ function renderCalendar() {
             dateNew.getDate() === currentDate.getDate()
         ) {
             newDiv = createNewDateElement('day--today', i, dateNew);
+            newDiv.classList.add('day--clicked');
         } else {
             newDiv = createNewDateElement('', i, dateNew);
         }
@@ -91,7 +91,10 @@ function renderCalendar() {
 
     days.forEach(elem => daysCalendar.appendChild(elem));
 
-    document.querySelectorAll('.calendar__days div').forEach(div => div.addEventListener('click', e => updateDateChoice(e)));
+    document.querySelectorAll('.calendar__days div').forEach(div => div.addEventListener('click', e => {
+        updateDateChoice(e);
+        fetchDreamsByDate();
+    }));
 }
 
 function updateDateChoice(e) {
@@ -106,6 +109,50 @@ function updateDateChoice(e) {
     }
 }
 
+function fetchDreamsByDate() {
+    const currentDay = document.querySelector('.day--clicked');
+    const currentDate = currentDay.children[0].dateTime;
+
+    const data = {
+        date: currentDate
+    };
+
+    fetch("/date", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(function (response) {
+        return response.json();
+    }).then(function (dreams) {
+        dreamsContainer.innerHTML = "";
+        loadDreams(dreams);
+    });
+}
+
+function loadDreams(dreams) {
+    dreams.forEach(dream => {
+        createDream(dream);
+    });
+}
+
+function createDream(dream) {
+    const template = document.querySelector("#dream-template");
+    const clone = template.content.cloneNode(true);
+
+    const a = clone.querySelector(".dreams__dream-day__dream");
+    a.setAttribute("data-dreamid", dream.dreamID);
+
+    const h1 = a.querySelector(".dreams__dream-day__dream__title");
+    h1.textContent = dream.title;
+
+    const p = a.querySelector(".dreams__dream-day__dream__story");
+    p.textContent = dream.story;
+
+    dreamsContainer.appendChild(clone);
+}
+
 document.querySelector('.prev').addEventListener('click', () => {
     date.setMonth(date.getMonth() - 1);
     renderCalendar();
@@ -117,3 +164,4 @@ document.querySelector('.next').addEventListener('click', () => {
 })
 
 renderCalendar();
+fetchDreamsByDate();

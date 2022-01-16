@@ -97,7 +97,7 @@ function changeToInvalidInput() {
     }
 }
 
-//add error class to required and empty fields 
+//TODO: add invalid class to story element
 function addErrorClass() {
     requiredElements.forEach((elem) => {
         if (elem.value == null || elem.value == "") {

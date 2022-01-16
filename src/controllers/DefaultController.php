@@ -7,31 +7,19 @@ class DefaultController extends AppController
 
     public function index()
     {
-        $this->render('onboarding');
-    }
+        session_start();
+        session_write_close();
 
-    public function signin()
-    {
-        $this->render('signin');
-    }
-
-    public function signup()
-    {
-        $this->render('signup');
-    }
-
-    public function dreamslist()
-    {
-        $this->render('dreamslist');
+        if(isset($_SESSION["u"])){
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/dreamslist");
+        }else{
+            $this->render('onboarding');
+        }
     }
 
     public function dream()
     {
         $this->render('dream');
-    }
-
-    public function adddream()
-    {
-        $this->render('adddream');
     }
 }

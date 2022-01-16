@@ -65,7 +65,7 @@
 
 .calendar__days div.day--inactive {
     color: var(--dark-theme-800);
-    cursor: auto;
+    cursor: pointer;
 }
 
 .calendar__days div.day--today {

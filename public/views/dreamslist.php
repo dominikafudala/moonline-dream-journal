@@ -24,7 +24,7 @@
     </header>
     <nav class="toggle">
         <ul>
-            <a href="">
+            <a href="dreamslist">
                 <li class="toggle__list toggle--active">
                     <div class="toggle__wrapper">
                         <img class="toggle__list__icon toggle--active" src="/public/img/list_purple_icon.svg" alt="list icon">
@@ -32,7 +32,7 @@
                     </div>
                 </li>
             </a>
-            <a href="">
+            <a href="calendar">
                 <li class="toggle__calendar">
                     <div class="toggle__wrapper">
                         <img class="toggle__calendar__icon" src="/public/img/calendar_icon.svg" alt="calendar icon">
@@ -47,10 +47,12 @@
             <img class="link-btn-add-dream__icon" src="/public/img/plus_icon.svg" alt="plus icon">
         </a>
         <section class="dreams">
-            <?php foreach ($dreams as $dream) : ?>
+            <?php foreach ($dates as $date => $dreams) : ?>
+            <?php if(!is_int($date)) : ?>
                 <div class="dreams__dream-day">
-                    <p class="dreams__dream-day__date"><?= $dream->getDate(); ?></p>
-                    <a href="dream" class="dreams__dream-day__dream">
+                    <p class="dreams__dream-day__date"><?= $date; ?></p>
+                    <?php foreach ($dreams as $dream) : ?>
+                    <a href="dream" class="dreams__dream-day__dream" data-dreamid = <?= $dream->getId(); ?> >
                         <h1 class="dreams__dream-day__dream__title"><?= $dream->getTitle(); ?></h1>
                         <div class="dreams__dream-day__dream__options">
                             <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg" alt="options icon">
@@ -59,70 +61,14 @@
                             <?= $dream->getStory(); ?>
                         </p>
                     </a>
+                    <?php endforeach; ?>
                 </div>
+                <?php endif; ?>
             <?php endforeach; ?>
 
 
             <div class="dreams__dream-day">
                 <p class="dreams__dream-day__date">27 Nov 2021</p>
-                <a href="dream" class="dreams__dream-day__dream">
-                    <h1 class="dreams__dream-day__dream__title">Title dvbhdfhdbjfkjdnvdfkv</h1>
-                    <div class="dreams__dream-day__dream__options">
-                        <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg" alt="options icon">
-                    </div>
-                    <p class="dreams__dream-day__dream__story">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti consequatur quos, reiciendis
-                        culpa harum ea exercitationem modi quas laudantium voluptatum, quae provident hic ab iure
-                        quisquam, illo quo fugit assumenda.
-                    </p>
-                </a>
-                <a href="dream" class="dreams__dream-day__dream">
-                    <h1 class="dreams__dream-day__dream__title">Title dvbhdfhdbjfkjdnvdfkv</h1>
-                    <div class="dreams__dream-day__dream__options">
-                        <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg" alt="options icon">
-                    </div>
-                    <p class="dreams__dream-day__dream__story">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti consequatur quos, reiciendis
-                        culpa harum ea exercitationem modi quas laudantium voluptatum, quae provident hic ab iure
-                        quisquam, illo quo fugit assumenda.
-                    </p>
-                </a>
-                <a href="dream" class="dreams__dream-day__dream">
-                    <h1 class="dreams__dream-day__dream__title">Title dvbhdfhdbjfkjdnvdfkv</h1>
-                    <div class="dreams__dream-day__dream__options">
-                        <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg" alt="options icon">
-                    </div>
-                    <p class="dreams__dream-day__dream__story">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti consequatur quos, reiciendis
-                        culpa harum ea exercitationem modi quas laudantium voluptatum, quae provident hic ab iure
-                        quisquam, illo quo fugit assumenda.
-                    </p>
-                </a>
-            </div>
-            <div class="dreams__dream-day">
-                <p class="dreams__dream-day__date">27 Nov 2021</p>
-                <a href="dream" class="dreams__dream-day__dream">
-                    <h1 class="dreams__dream-day__dream__title">Title dvbhdfhdbjfkjdnvdfkv</h1>
-                    <div class="dreams__dream-day__dream__options">
-                        <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg" alt="options icon">
-                    </div>
-                    <p class="dreams__dream-day__dream__story">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti consequatur quos, reiciendis
-                        culpa harum ea exercitationem modi quas laudantium voluptatum, quae provident hic ab iure
-                        quisquam, illo quo fugit assumenda.
-                    </p>
-                </a>
-                <a href="dream" class="dreams__dream-day__dream">
-                    <h1 class="dreams__dream-day__dream__title">Title dvbhdfhdbjfkjdnvdfkv</h1>
-                    <div class="dreams__dream-day__dream__options">
-                        <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg" alt="options icon">
-                    </div>
-                    <p class="dreams__dream-day__dream__story">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti consequatur quos, reiciendis
-                        culpa harum ea exercitationem modi quas laudantium voluptatum, quae provident hic ab iure
-                        quisquam, illo quo fugit assumenda.
-                    </p>
-                </a>
                 <a href="dream" class="dreams__dream-day__dream">
                     <h1 class="dreams__dream-day__dream__title">Title dvbhdfhdbjfkjdnvdfkv</h1>
                     <div class="dreams__dream-day__dream__options">
