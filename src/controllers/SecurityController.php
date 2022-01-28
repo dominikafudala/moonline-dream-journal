@@ -23,7 +23,7 @@ class SecurityController extends AppController {
                 $url = "http://$_SERVER[HTTP_HOST]";
                 header("Location: {$url}/dreamslist");
             }else{
-                return $this->render('signin');
+                $this->render('signin');
             }
         }
 
@@ -33,15 +33,15 @@ class SecurityController extends AppController {
         $user = $this->userRepository->getUser($username);
 
         if (!$user) {
-            return $this->render('signin', ['messages' => ['User not found!']]);
+            $this->render('signin', ['messages' => ['User not found!']]);
         }
 
         if ($user->getEmail() !== $username && $user->getUsername() !== $username) {
-            return $this->render('signin', ['messages' => ['User does not exist!']]);
+            $this->render('signin', ['messages' => ['User does not exist!']]);
         }
 
         if (!password_verify($password, $user->getPassword())) {
-            return $this->render('signin', ['messages' => ['Wrong password!']]);
+            $this->render('signin', ['messages' => ['Wrong password!']]);
         }
 
         session_start();
@@ -60,7 +60,7 @@ class SecurityController extends AppController {
                 $url = "http://$_SERVER[HTTP_HOST]";
                 header("Location: {$url}/dreamslist");
             }else{
-                return $this->render('signup');
+                $this->render('signup');
             }
         }
 
@@ -70,16 +70,16 @@ class SecurityController extends AppController {
         $repeatPassword = $_POST['repeat-password'];
 
         if ($password !== $repeatPassword) {
-            return $this->render('signup', ['messages' => ['Please provide passwords that match']]);
+            $this->render('signup', ['messages' => ['Please provide passwords that match']]);
         }
 
         $user = new User($username, $email, password_hash($password, PASSWORD_BCRYPT));
 
         try{
             $this->userRepository->addUser($user);
-            return $this->render('signin', ['success' => ['You can now sign in']]);
+            $this->render('signin', ['success' => ['You can now sign in']]);
         } catch (PDOException $exec){
-            return $this->render('signup', ['messages' => ['User with this username or email already exists']]);
+            $this->render('signup', ['messages' => ['User with this username or email already exists']]);
         }
     }
 }
