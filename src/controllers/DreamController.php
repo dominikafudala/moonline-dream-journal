@@ -33,6 +33,7 @@ class DreamController extends AppController
     {
         session_start();
         session_write_close();
+
         if(isset($_SESSION["u"])){
             $dates = $this->dreamRepository->getDreams();
             $this->render('dreamslist', ['dates' => $dates]);

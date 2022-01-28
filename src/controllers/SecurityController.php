@@ -46,7 +46,6 @@ class SecurityController extends AppController {
 
         session_start();
         $_SESSION["u"]=$user->getUsername();
-        session_write_close();
 
         $url = "http://$_SERVER[HTTP_HOST]";
         header("Location: {$url}/dreamslist");
