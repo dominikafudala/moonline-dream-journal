@@ -1,22 +1,24 @@
 <?php
 
-class Dream{
+class Dream
+{
     private $date;
     private $title;
     private $story;
     private $nightmare;
     private $moonphase;
     private $note;
-    private $id =-1;
+    private $id = -1;
+    private $moods = [];
 
-    public function __construct(string $date,
-                                string $title,
-                                string $story,
-                                int $nightmare,
-                                int $moonphase,
-                                string $note
-                                )
-    {
+    public function __construct(
+        string $date,
+        string $title,
+        string $story,
+        int    $nightmare,
+        int    $moonphase,
+        string $note
+    ) {
         $this->date = $date;
         $this->title = $title;
         $this->story = $story;
@@ -33,6 +35,26 @@ class Dream{
     public function setDate(string $date)
     {
         $this->date = $date;
+    }
+
+    public function getFormattedDate(): string
+    {
+        $months = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ];
+        $arrayDate = explode("-", $this->date);
+        return $arrayDate[2] . " " . $months[$arrayDate[1] - 1] . " " . $arrayDate[0];
     }
 
     public function getTitle(): string
@@ -96,9 +118,14 @@ class Dream{
         $this->id = $id;
     }
 
+    public function addMood($key, $url)
+    {
+        $this->moods[] = $key;
+        $this->moods[$key] = $url;
+    }
 
-
-
-
-
+    public function getMoods(): array
+    {
+        return $this->moods;
+    }
 }

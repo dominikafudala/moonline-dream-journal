@@ -68,11 +68,11 @@
     cursor: pointer;
 }
 
-.calendar__days div.day--today {
+.calendar__days div.day--clicked {
     color: var(--gray-900);
 }
 
-.calendar__days div.day--today::before {
+.calendar__days div.day--clicked::before {
     content: '';
     position: absolute;
     top: 0;
@@ -96,7 +96,7 @@
     background-color: var(--yellow-100);
 }
 
-.calendar__days div.day--clicked::before {
+.calendar__days div.day--today::before {
     content: '';
     position: absolute;
     top: 0;

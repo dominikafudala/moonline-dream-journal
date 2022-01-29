@@ -48,39 +48,23 @@
         </a>
         <section class="dreams">
             <?php foreach ($dates as $date => $dreams) : ?>
-            <?php if(!is_int($date)) : ?>
-                <div class="dreams__dream-day">
-                    <p class="dreams__dream-day__date"><?= $date; ?></p>
-                    <?php foreach ($dreams as $dream) : ?>
-                    <a href="dream" class="dreams__dream-day__dream" data-dreamid = <?= $dream->getId(); ?> >
-                        <h1 class="dreams__dream-day__dream__title"><?= $dream->getTitle(); ?></h1>
-                        <div class="dreams__dream-day__dream__options">
-                            <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg" alt="options icon">
-                        </div>
-                        <p class="dreams__dream-day__dream__story">
-                            <?= $dream->getStory(); ?>
-                        </p>
-                    </a>
-                    <?php endforeach; ?>
-                </div>
+                <?php if (!is_int($date)) : ?>
+                    <div class="dreams__dream-day">
+                        <p class="dreams__dream-day__date"><?= $date; ?></p>
+                        <?php foreach ($dreams as $dream) : ?>
+                            <a href="dream/<?= $dream->getId(); ?>" class="dreams__dream-day__dream" data-dreamid=<?= $dream->getId(); ?>>
+                                <h1 class="dreams__dream-day__dream__title"><?= $dream->getTitle(); ?></h1>
+                                <div class="dreams__dream-day__dream__options">
+                                    <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg" alt="options icon">
+                                </div>
+                                <p class="dreams__dream-day__dream__story">
+                                    <?= $dream->getStory(); ?>
+                                </p>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
                 <?php endif; ?>
             <?php endforeach; ?>
-
-
-            <div class="dreams__dream-day">
-                <p class="dreams__dream-day__date">27 Nov 2021</p>
-                <a href="dream" class="dreams__dream-day__dream">
-                    <h1 class="dreams__dream-day__dream__title">Title dvbhdfhdbjfkjdnvdfkv</h1>
-                    <div class="dreams__dream-day__dream__options">
-                        <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg" alt="options icon">
-                    </div>
-                    <p class="dreams__dream-day__dream__story">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti consequatur quos, reiciendis
-                        culpa harum ea exercitationem modi quas laudantium voluptatum, quae provident hic ab iure
-                        quisquam, illo quo fugit assumenda.
-                    </p>
-                </a>
-            </div>
         </section>
     </main>
     <footer>

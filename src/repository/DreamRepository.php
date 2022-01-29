@@ -8,32 +8,43 @@ class DreamRepository extends Repository
     public function getDream(int $id): ?Dream
     {
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.dreams WHERE dreamID = :id
+            SELECT * FROM public.dreams WHERE "dreamID" = :id
         ');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
         $dream = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        if($this->getUserId() != $dream['userID']){
+            return null;
+        }
+
         if ($dream == false) {
             return null;
         }
 
-        return new Dream(
+        $dreamObj = new Dream(
             $dream['date'],
             $dream['title'],
             $dream['story'],
             $dream['nightmare'],
-            $dream['moonphase'],
+            $dream['moonphaseID'],
             $dream['note']
         );
+
+        $dreamObj->setId($dream['dreamID']);
+
+        $this->getMoods($dreamObj);
+
+
+        return $dreamObj;
     }
 
-    public function addDream(Dream $dream):void
+    public function addDream(Dream $dream, $moods):void
     {
         $stmt = $this->database->connect()->prepare('
             INSERT INTO public.dreams ("userID", date, title, story, nightmare, "moonphaseID", note)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?) returning "dreamID"
         ');
 
         $userID = $this->getUserId();
@@ -47,6 +58,9 @@ class DreamRepository extends Repository
             $dream->getMoonphase(),
             $dream->getNote()
         ]);
+
+        $last_id = $stmt->fetch(PDO::FETCH_ASSOC)['dreamID'];
+        $this->setMoods($moods, $last_id);
 
     }
 
@@ -124,7 +138,7 @@ class DreamRepository extends Repository
     private function getDreamsByDateFromArray($dreamsArray, $date):array{
         $result = [];
         foreach ($dreamsArray as $dream){
-            if($dream->getDate() === $date){
+            if($dream->getFormattedDate() === $date){
                 $result[] = $dream;
             }
         }
@@ -134,10 +148,68 @@ class DreamRepository extends Repository
     private function getAllDatesFromArray($dreamsArray):array{
         $result = [];
         foreach ($dreamsArray as $dream){
-            if(!array_key_exists($dream->getDate(),$result)){
-                $result[] = $dream->getdate();
+            if(!array_key_exists($dream->getFormattedDate(),$result)){
+                $result[] = $dream->getFormattedDate();
             }
         }
         return $result;
+    }
+
+    private function setMoods($moods, $last_id){
+        $mood_keys = array_keys($moods);
+        $moods_on = [];
+        foreach ($mood_keys as $key) {
+            if ($moods[$key] === "on") {
+                $moods_on[] = "'". $key . "'";
+            }
+        }
+
+        $moods_string = implode(',', $moods_on);
+        if($moods_string ===""){
+            return;
+        }
+
+        $stmt_get_moods = $this->database->connect()->prepare('
+            SELECT 
+                "moodID" 
+            FROM
+                public.moods
+            WHERE 
+                name IN('.$moods_string.')
+        ');
+        $stmt_get_moods->execute();
+        $moods_ids = $stmt_get_moods->fetchAll();
+
+        foreach($moods_ids as $id){
+            $res = $id['moodID'];
+            $this->insertMoods($res, $last_id);
+        }
+    }
+
+    private function insertMoods($moodId, $dreamId){
+        $stmt = $this->database->connect()->prepare('
+            INSERT INTO public.dreams_moods ("dreamID", "moodID")
+            VALUES (?, ?)
+        ');
+
+        $stmt->execute([
+            $dreamId,
+            $moodId
+        ]);
+    }
+
+    private function getMoods($dream){
+        $id = $dream->getId();
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM public.moods WHERE "moodID" IN 
+            (SELECT "moodID" FROM public.dreams_moods WHERE "dreamID" = :id)
+        ');
+        $stmt->bindParam(':id', $id , PDO::PARAM_INT);
+        $stmt->execute();
+
+        $moods = $stmt->fetchAll();
+        foreach ($moods as $mood){
+            $dream->addMood($mood['name'], $mood['imgUrl']);
+        }
     }
 }

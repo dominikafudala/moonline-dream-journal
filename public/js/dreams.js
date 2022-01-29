@@ -3,10 +3,14 @@ function toggleActiveOptions(e) {
     console.log("Yeey");
 }
 
-const optionDiv = document.querySelectorAll(".dreams__dream-day__dream__options");
+function addOptions() {
+    const optionDiv = document.querySelectorAll(".dreams__dream-day__dream__options");
 
-optionDiv.forEach(
-    (div) => {
-        div.addEventListener("click", toggleActiveOptions);
-    }
-)
+    optionDiv.forEach(
+        (div) => {
+            div.addEventListener("click", toggleActiveOptions);
+        }
+    )
+}
+
+addOptions();

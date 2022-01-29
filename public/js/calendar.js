@@ -127,14 +127,35 @@ function fetchDreamsByDate() {
         return response.json();
     }).then(function (dreams) {
         dreamsContainer.innerHTML = "";
-        loadDreams(dreams);
+        loadDreams(dreams, currentDate);
     });
 }
 
-function loadDreams(dreams) {
+function loadDreams(dreams, currentDate) {
+    const p = document.createElement("p");
+    p.classList.add("dreams__dream-day__date");
+    const splitDate = currentDate.split("-");
+    const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+    ];
+    p.textContent = splitDate[2] + " " + months[splitDate[1] - 1] + " " + splitDate[0];
+    dreamsContainer.appendChild(p);
     dreams.forEach(dream => {
         createDream(dream);
     });
+
+    addOptions();
 }
 
 function createDream(dream) {
@@ -143,6 +164,7 @@ function createDream(dream) {
 
     const a = clone.querySelector(".dreams__dream-day__dream");
     a.setAttribute("data-dreamid", dream.dreamID);
+    a.setAttribute("href", "dream/" + dream.dreamID);
 
     const h1 = a.querySelector(".dreams__dream-day__dream__title");
     h1.textContent = dream.title;

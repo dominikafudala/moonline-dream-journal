@@ -25,30 +25,30 @@ class SecurityController extends AppController {
             }else{
                 $this->render('signin');
             }
+        }else{
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            $user = $this->userRepository->getUser($username);
+
+            if (!$user) {
+                $this->render('signin', ['messages' => ['User not found!']]);
+            }
+
+            if ($user->getEmail() !== $username && $user->getUsername() !== $username) {
+                $this->render('signin', ['messages' => ['User does not exist!']]);
+            }
+
+            if (!password_verify($password, $user->getPassword())) {
+                $this->render('signin', ['messages' => ['Wrong password!']]);
+            }
+
+            session_start();
+            $_SESSION["u"]=$user->getUsername();
+
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}/dreamslist");
         }
-
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-
-        $user = $this->userRepository->getUser($username);
-
-        if (!$user) {
-            $this->render('signin', ['messages' => ['User not found!']]);
-        }
-
-        if ($user->getEmail() !== $username && $user->getUsername() !== $username) {
-            $this->render('signin', ['messages' => ['User does not exist!']]);
-        }
-
-        if (!password_verify($password, $user->getPassword())) {
-            $this->render('signin', ['messages' => ['Wrong password!']]);
-        }
-
-        session_start();
-        $_SESSION["u"]=$user->getUsername();
-
-        $url = "http://$_SERVER[HTTP_HOST]";
-        header("Location: {$url}/dreamslist");
     }
 
     public function  signup(){

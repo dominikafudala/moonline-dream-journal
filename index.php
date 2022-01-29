@@ -17,5 +17,6 @@ Router::get('adddream', 'DreamController');
 Router::post('addDream', 'DreamController');
 Router::get('calendar', 'DreamController');
 Router::post('date', 'DreamController');
+Router::get('dream', 'DreamController');
 
 Router::run($path);

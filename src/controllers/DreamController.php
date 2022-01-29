@@ -21,10 +21,10 @@ class DreamController extends AppController
 
         session_write_close();
 
-        if(isset($_SESSION["u"])){
+        if (isset($_SESSION["u"])) {
             $url = "http://$_SERVER[HTTP_HOST]";
             $this->render('calendar');
-        }else{
+        } else {
             $this->render('onboarding');
         }
     }
@@ -34,11 +34,10 @@ class DreamController extends AppController
         session_start();
         session_write_close();
 
-        if(isset($_SESSION["u"])){
+        if (isset($_SESSION["u"])) {
             $dates = $this->dreamRepository->getDreams();
             $this->render('dreamslist', ['dates' => $dates]);
-        }
-        else {
+        } else {
             //TODO: render no permission page or smth like this
             $this->render('onboarding');
         }
@@ -48,18 +47,28 @@ class DreamController extends AppController
     public function adddream()
     {
 
-         if ($this->isGet()) {
-             return $this->render('adddream');
-         }
+        if ($this->isGet()) {
+            return $this->render('adddream');
+        }
 
         if ($this->isPost()) {
+            $moods= [
+                "okay" => $_POST['okay'],
+                "happy" => $_POST['happy'],
+                "excited" => $_POST['excited'],
+                "cringe" => $_POST['cringe'],
+                "sad" => $_POST['sad'],
+                "scared" => $_POST['scared'],
+                "confused" => $_POST['confused'],
+                "angry" => $_POST['angry']
+                ];
             $nightmare = $_POST['nightmare'];
             $nightmareBool = false;
             if ($nightmare == "yes") {
                 $nightmareBool = true;
             }
             $dream = new Dream($_POST['date'], $_POST['title'], $_POST['story'], $nightmareBool, 1, $_POST['notes']);
-            $this->dreamRepository->addDream($dream);
+            $this->dreamRepository->addDream($dream, $moods);
 
             $url = "http://$_SERVER[HTTP_HOST]";
             header("Location: {$url}/dreamslist");
@@ -79,6 +88,22 @@ class DreamController extends AppController
             http_response_code(200);
 
             echo json_encode($this->dreamRepository->getByDate($decoded['date']));
+        }
+    }
+
+    public function dream($id)
+    {
+
+        if(strval($id) == strval(intval($id))){
+            $dream = $this->dreamRepository->getDream($id);
+            if(!$dream){
+                //TODO: render not found page
+                die("Wrong url!");
+            }
+            $this->render('dream', ['dream' => $dream]);
+        }else{
+            //TODO: render not found page
+            die("Wrong url!");
         }
     }
 }

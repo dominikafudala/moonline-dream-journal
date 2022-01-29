@@ -90,7 +90,7 @@
 
 
 <template id="dream-template">
-    <a href="dream" class="dreams__dream-day__dream" data-dreamid="">
+    <a href="dream/51" class="dreams__dream-day__dream" data-dreamid="">
         <h1 class="dreams__dream-day__dream__title"></h1>
         <div class="dreams__dream-day__dream__options">
             <img class="dreams__dream-day__dream__options__icon" src="/public/img/dots_icon.svg" alt="options icon">
