@@ -22,9 +22,11 @@ class DreamController extends AppController
 
         if (isset($_SESSION["u"])) {
             $dates = $this->dreamRepository->getDreams();
-            $this->render('dreamslist', ['dates' => $dates]);
+            return $this->render('dreamslist', ['dates' => $dates]);
         } else {
-            $this->render('onboarding');
+
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}");
         }
     }
 
@@ -32,75 +34,107 @@ class DreamController extends AppController
     public function adddream()
     {
 
-        if ($this->isGet()) {
-            return $this->render('adddream');
-        }
+        session_start();
+        session_write_close();
 
-        if ($this->isPost()) {
-            $moods = [
-                "okay" => $_POST['okay'],
-                "happy" => $_POST['happy'],
-                "excited" => $_POST['excited'],
-                "cringe" => $_POST['cringe'],
-                "sad" => $_POST['sad'],
-                "scared" => $_POST['scared'],
-                "confused" => $_POST['confused'],
-                "angry" => $_POST['angry']
-            ];
-            $nightmare = $_POST['nightmare'];
-            $nightmareBool = false;
-            if ($nightmare == "yes") {
-                $nightmareBool = true;
+        if (isset($_SESSION["u"])) {
+            if ($this->isGet()) {
+                return $this->render('adddream');
             }
 
-            $moonphase = $this->dreamRepository->getMoonphaseFromDate($_POST['date']);
-            $dream = new Dream($_POST['date'], $_POST['title'], $_POST['story'], $nightmareBool, $moonphase, $_POST['notes']);
-            $this->dreamRepository->addDream($dream, $moods);
+            if ($this->isPost()) {
+                $moods = [
+                    "okay" => $_POST['okay'],
+                    "happy" => $_POST['happy'],
+                    "excited" => $_POST['excited'],
+                    "cringe" => $_POST['cringe'],
+                    "sad" => $_POST['sad'],
+                    "scared" => $_POST['scared'],
+                    "confused" => $_POST['confused'],
+                    "angry" => $_POST['angry']
+                ];
+                $nightmare = $_POST['nightmare'];
+                $nightmareBool = false;
+                if ($nightmare == "yes") {
+                    $nightmareBool = true;
+                }
 
+                $moonphase = $this->dreamRepository->getMoonphaseFromDate($_POST['date']);
+                $dream = new Dream($_POST['date'], $_POST['title'], $_POST['story'], $nightmareBool, $moonphase, $_POST['notes']);
+                $this->dreamRepository->addDream($dream, $moods);
+
+                $url = "http://$_SERVER[HTTP_HOST]";
+                header("Location: {$url}/dreamslist");
+                return;
+            }
+            return $this->render('adddream', []);
+        } else {
             $url = "http://$_SERVER[HTTP_HOST]";
-            header("Location: {$url}/dreamslist");
-            return;
+            header("Location: {$url}");
         }
-        return $this->render('adddream', []);
     }
 
     public function date()
     {
-        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+        session_start();
+        session_write_close();
 
-        if ($contentType === "application/json") {
-            $content = trim(file_get_contents("php://input"));
-            $decoded = json_decode($content, true);
+        if (isset($_SESSION["u"])) {
+            $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
-            header('Content-type: application/json');
-            http_response_code(200);
+            if ($contentType === "application/json") {
+                $content = trim(file_get_contents("php://input"));
+                $decoded = json_decode($content, true);
 
-            echo json_encode($this->dreamRepository->getByDate($decoded['date']));
+                header('Content-type: application/json');
+                http_response_code(200);
+
+                echo json_encode($this->dreamRepository->getByDate($decoded['date']));
+            }
+        } else {
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}");
         }
     }
 
     public function dream($id)
     {
 
-        if (strval($id) == strval(intval($id))) {
-            $dream = $this->dreamRepository->getDream($id);
-            if (!$dream) {
+        session_start();
+        session_write_close();
+
+        if (isset($_SESSION["u"])) {
+            if (strval($id) == strval(intval($id))) {
+                $dream = $this->dreamRepository->getDream($id);
+                if (!$dream) {
+                    die("Wrong url!");
+                    return;
+                }
+                $moon = $this->dreamRepository->getMoonphaseFromId($dream->getMoonphase());
+                $this->render('dream', ['dream' => $dream, 'moon' => $moon]);
+            } else {
                 die("Wrong url!");
-                return;
             }
-            $moon = $this->dreamRepository->getMoonphaseFromId($dream->getMoonphase());
-            $this->render('dream', ['dream' => $dream, 'moon' => $moon]);
         } else {
-            die("Wrong url!");
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}");
         }
     }
 
     public function delete($id)
     {
-        if (strval($id) == strval(intval($id))) {
-            $this->dreamRepository->deleteDream($id);
+        session_start();
+        session_write_close();
+
+        if (isset($_SESSION["u"])) {
+            if (strval($id) == strval(intval($id))) {
+                $this->dreamRepository->deleteDream($id);
+            } else {
+                die("Wrong url!");
+            }
         } else {
-            die("Wrong url!");
+            $url = "http://$_SERVER[HTTP_HOST]";
+            header("Location: {$url}");
         }
     }
 }

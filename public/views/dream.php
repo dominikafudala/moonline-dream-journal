@@ -18,10 +18,7 @@
     <header class="dream__header">
         <div class="back">
             <a href="/dreamslist">
-                <button class="back_btn">
-                    <img class="back__btn__arrow" src="/public/img/navigate_before.svg" alt="Navigate before arrow">
-                    <p class="back_btn_text">Back</p>
-                </button>
+                <?php include 'back.php';?>
             </a>
         </div>
         <p class="dream__header__date"><?= $dream->getFormattedDate(); ?></p>

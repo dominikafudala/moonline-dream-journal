@@ -104,10 +104,13 @@ class DreamRepository extends Repository
     }
 
     public function deleteDream($id){
+
         $stmt = $this->database->connect()->prepare('
-            DELETE FROM public.dreams WHERE "dreamID" = :id;
+            DELETE FROM public.dreams WHERE "dreamID" = :id AND "userID" = :uid;
         ');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $uid = $this->getUserId();
+        $stmt->bindParam(':uid', $uid , PDO::PARAM_INT);
         $stmt->execute();
     }
 

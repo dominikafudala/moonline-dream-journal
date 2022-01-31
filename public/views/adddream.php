@@ -19,10 +19,7 @@
     <div class="form-wrapper">
         <header>
             <div class="back step-back">
-                <button class="back_btn">
-                    <img class="back__btn__arrow" src="/public/img/navigate_before.svg" alt="Navigate before arrow">
-                    <p class="back_btn_text">Back</p>
-                </button>
+                <?php include 'back.php';?>
             </div>
             <button class="save-btn btn--gray" form="dream-form__form" type="submit">
                 <img class="save-btn__icon" src="/public/img/save.svg" alt="save icon">
