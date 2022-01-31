@@ -99,6 +99,11 @@ textarea:focus {
     border: 1px solid var(--purple-primary);
 }
 
+input.not-valid,
+textarea.not-valid {
+    border: 1px solid var(--error-500);
+}
+
 label {
     color: var(--gray-400);
     font-size: 1rem;
@@ -115,6 +120,10 @@ textarea:focus+label {
     color: var(--purple-primary);
 }
 
+input.not-valid+label,
+textarea.not-valid+label {
+    color: var(--error-500);
+}
 
 .back {
     position: relative;

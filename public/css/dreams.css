@@ -4,18 +4,24 @@
 
 .gear {
     width: 24px;
+    cursor: pointer;
 }
 
 .toggle {
+    max-width: 800px;
     height: 48px;
-    margin: 0 24px;
+    width: calc(100% - 48px);
+    margin: 0 auto;
     border: 1px solid var(--dark-theme-400);
     border-radius: 100px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .toggle ul {
     list-style-type: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     height: 100%;
 }
@@ -34,14 +40,42 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
     height: 100%;
 }
 
-.toggle img {
+.toggle svg {
     margin-right: 8px;
+}
+
+.toggle__calendar__icon path,
+.toggle__calendar__icon rect {
+    stroke: #667085;
+}
+
+.toggle--active .toggle__calendar__icon path,
+.toggle--active .toggle__calendar__icon rect {
+    stroke: #9E77ED;
+}
+
+.toggle__list__icon path,
+.toggle__list__icon circle,
+.toggle__calendar__icon path:nth-child(1) {
+    fill: #667085;
+}
+
+.toggle--active .toggle__list__icon path,
+.toggle--active .toggle__list__icon circle,
+.toggle--active .toggle__calendar__icon path:nth-child(1) {
+    fill: #9E77ED;
 }
 
 .toggle a {
@@ -56,7 +90,7 @@ li.toggle--active {
     background-color: var(--dark-theme-700);
 }
 
-p.toggle--active {
+.toggle--active .toggle__wrapper p {
     color: var(--purple-primary);
 }
 
@@ -74,7 +108,7 @@ p.toggle--active {
     height: 64px;
     border-radius: 4px;
     background-color: var(--purple-primary);
-    margin: 20px auto 38px;
+    margin: 32px auto;
     position: relative
 }
 
@@ -82,11 +116,15 @@ p.toggle--active {
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
 
 .dreams {
-    margin: 0 24px;
+    max-width: 800px;
+    width: calc(100% - 48px);
+    margin: 0 auto;
 }
 
 .dreams__dream-day {
@@ -107,6 +145,7 @@ p.toggle--active {
     margin-bottom: 16px;
     border: 1px solid var(--dark-theme-800);
     border-radius: 4px;
+    position: relative;
 }
 
 .dreams__dream-day__dream__title {
@@ -117,6 +156,7 @@ p.toggle--active {
     font-weight: bold;
     font-size: 1.125rem;
     color: var(--gray-200);
+    -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -142,6 +182,7 @@ p.toggle--active {
     font-size: 0.75rem;
     line-height: 1.125rem;
     color: var(--gray-400);
+    -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
@@ -152,7 +193,6 @@ p.toggle--active {
 footer {
     height: 140px;
     width: 100%;
-    bottom: 0;
     text-align: center;
 }
 
@@ -167,7 +207,7 @@ footer {
 
 .share_btn {
     height: 44px;
-    width: 68px;
+    width: 56px;
     background: var(--dark-theme-800);
     border: 1px solid var(--dark-theme-500);
     border-radius: 100px;
@@ -178,11 +218,15 @@ footer {
     position: absolute;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
 
 .dream-info {
-    margin: 0 24px;
+    max-width: 800px;
+    width: calc(100% - 48px);
+    margin: 0 auto;
 }
 
 .dream-info>* {
@@ -217,7 +261,11 @@ footer {
 }
 
 .dream-info__title__nightmare {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
 }
 
@@ -237,4 +285,88 @@ footer {
     color: var(--gray-300);
     font-size: 0.875rem;
     line-height: 1.25rem;
+}
+
+.signout {
+    position: relative;
+    height: 56px;
+    width: calc(100% - 24px);
+    max-width: 300px;
+    margin: 0 24px 24px auto;
+    background-color: var(--dark-theme-900);
+    border: 1px solid var(--dark-theme-800);
+    border-radius: 10px;
+}
+
+.signout.--inactive {
+    display: none;
+}
+
+.signout__btn {
+    position: absolute;
+    height: 36px;
+    width: 184px;
+    border-radius: 100px;
+    padding: 8px 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.options {
+    position: absolute;
+    top: 40px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    height: 50px;
+    width: 100px;
+    background-color: var(--dark-theme-800);
+    border: 1px solid var(--dark-theme-400);
+    border-radius: 4px;
+    color: var(--gray-200);
+}
+
+.options i {
+    margin-right: 10px;
+}
+
+@media(min-width: 992px) and (min-height: 652px) {
+    .moonline-logo {
+        width: 180px;
+    }
+
+    .desktop__main {
+        position: relative;
+        max-width: 1000px;
+        margin: 0 auto;
+        z-index: -2;
+    }
+
+    .smiling-moon {
+        position: absolute;
+        width: 40vh;
+        bottom: -6vh;
+        left: -50px;
+    }
+
+    footer {
+        height: 0;
+        position: fixed;
+        max-width: 1000px;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .desktop__list {
+        width: calc(100% - 252px - 80px);
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
 }

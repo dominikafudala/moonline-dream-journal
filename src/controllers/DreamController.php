@@ -15,20 +15,6 @@ class DreamController extends AppController
         $this->dreamRepository = new DreamRepository();
     }
 
-    public function calendar()
-    {
-        session_start();
-
-        session_write_close();
-
-        if (isset($_SESSION["u"])) {
-            $url = "http://$_SERVER[HTTP_HOST]";
-            $this->render('calendar');
-        } else {
-            $this->render('onboarding');
-        }
-    }
-
     public function dreamslist()
     {
         session_start();
@@ -38,7 +24,6 @@ class DreamController extends AppController
             $dates = $this->dreamRepository->getDreams();
             $this->render('dreamslist', ['dates' => $dates]);
         } else {
-            //TODO: render no permission page or smth like this
             $this->render('onboarding');
         }
     }
@@ -52,7 +37,7 @@ class DreamController extends AppController
         }
 
         if ($this->isPost()) {
-            $moods= [
+            $moods = [
                 "okay" => $_POST['okay'],
                 "happy" => $_POST['happy'],
                 "excited" => $_POST['excited'],
@@ -61,17 +46,20 @@ class DreamController extends AppController
                 "scared" => $_POST['scared'],
                 "confused" => $_POST['confused'],
                 "angry" => $_POST['angry']
-                ];
+            ];
             $nightmare = $_POST['nightmare'];
             $nightmareBool = false;
             if ($nightmare == "yes") {
                 $nightmareBool = true;
             }
-            $dream = new Dream($_POST['date'], $_POST['title'], $_POST['story'], $nightmareBool, 1, $_POST['notes']);
+
+            $moonphase = $this->dreamRepository->getMoonphaseFromDate($_POST['date']);
+            $dream = new Dream($_POST['date'], $_POST['title'], $_POST['story'], $nightmareBool, $moonphase, $_POST['notes']);
             $this->dreamRepository->addDream($dream, $moods);
 
             $url = "http://$_SERVER[HTTP_HOST]";
             header("Location: {$url}/dreamslist");
+            return;
         }
         return $this->render('adddream', []);
     }
@@ -94,15 +82,24 @@ class DreamController extends AppController
     public function dream($id)
     {
 
-        if(strval($id) == strval(intval($id))){
+        if (strval($id) == strval(intval($id))) {
             $dream = $this->dreamRepository->getDream($id);
-            if(!$dream){
-                //TODO: render not found page
+            if (!$dream) {
                 die("Wrong url!");
+                return;
             }
-            $this->render('dream', ['dream' => $dream]);
-        }else{
-            //TODO: render not found page
+            $moon = $this->dreamRepository->getMoonphaseFromId($dream->getMoonphase());
+            $this->render('dream', ['dream' => $dream, 'moon' => $moon]);
+        } else {
+            die("Wrong url!");
+        }
+    }
+
+    public function delete($id)
+    {
+        if (strval($id) == strval(intval($id))) {
+            $this->dreamRepository->deleteDream($id);
+        } else {
             die("Wrong url!");
         }
     }

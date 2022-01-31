@@ -1,4 +1,4 @@
-const date = new Date();
+const date = window.sessionStorage.getItem('dateVal') ? new Date(window.sessionStorage.getItem('dateVal')) : new Date();
 const currentDate = new Date();
 const dreamsContainer = document.querySelector('.dreams');
 
@@ -68,7 +68,6 @@ function renderCalendar() {
             dateNew.getDate() === currentDate.getDate()
         ) {
             newDiv = createNewDateElement('day--today', i, dateNew);
-            newDiv.classList.add('day--clicked');
         } else {
             newDiv = createNewDateElement('', i, dateNew);
         }
@@ -79,7 +78,7 @@ function renderCalendar() {
     let monthNext = 1;
 
     for (let i = dayOfWeekEnd + 1; i <= 7; i++) {
-        const dateNew = new Date(date.getFullYear(), date.getMonth() - 1, monthNext);
+        const dateNew = new Date(date.getFullYear(), date.getMonth() + 1, monthNext);
         const newDiv = createNewDateElement('day--inactive', monthNext, dateNew);
         days.push(newDiv);
         monthNext++;
@@ -98,6 +97,25 @@ function renderCalendar() {
 }
 
 function updateDateChoice(e) {
+
+    if (window.innerWidth >= 992) {
+        const elemType = e.target.nodeName;
+        if (elemType === "DIV") {
+            if (e.target.classList.contains('day--clicked')) {
+                e.target.classList.remove('day--clicked');
+                showList();
+                setDate();
+                return;
+            }
+        } else {
+            if (e.target.parentElement.classList.contains('day--clicked')) {
+                e.target.parentElement.classList.remove('day--clicked');
+                showList();
+                setDate();
+                return;
+            }
+        }
+    }
     document.querySelectorAll('.calendar__days div').forEach(div => {
         div.classList.remove('day--clicked');
     })
@@ -107,31 +125,37 @@ function updateDateChoice(e) {
     } else {
         e.target.parentElement.classList.add('day--clicked');
     }
+    setDate();
 }
 
 function fetchDreamsByDate() {
     const currentDay = document.querySelector('.day--clicked');
-    const currentDate = currentDay.children[0].dateTime;
+    if (currentDay) {
+        const currentDate = currentDay.children[0].dateTime;
 
-    const data = {
-        date: currentDate
-    };
+        const data = {
+            date: currentDate
+        };
 
-    fetch("/date", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(function (response) {
-        return response.json();
-    }).then(function (dreams) {
-        dreamsContainer.innerHTML = "";
-        loadDreams(dreams, currentDate);
-    });
+        fetch("/date", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(function (response) {
+            return response.json();
+        }).then(function (dreams) {
+            loadDreams(dreams, currentDate);
+        });
+    }
 }
 
 function loadDreams(dreams, currentDate) {
+    dreamsContainer.innerHTML = "";
+    const divDate = document.createElement("div");
+    divDate.classList.add('dreams__dream-day');
+    dreamsContainer.appendChild(divDate);
     const p = document.createElement("p");
     p.classList.add("dreams__dream-day__date");
     const splitDate = currentDate.split("-");
@@ -150,15 +174,20 @@ function loadDreams(dreams, currentDate) {
         "Dec"
     ];
     p.textContent = splitDate[2] + " " + months[splitDate[1] - 1] + " " + splitDate[0];
-    dreamsContainer.appendChild(p);
-    dreams.forEach(dream => {
-        createDream(dream);
-    });
+    divDate.appendChild(p);
+    if (dreams.length <= 0) {
+        createDummyDream(divDate);
+    } else {
+        dreams.forEach(dream => {
+            createDream(dream, divDate);
+        });
 
-    addOptions();
+        addOptions();
+        preventLoadOnDelete();
+    }
 }
 
-function createDream(dream) {
+function createDream(dream, div) {
     const template = document.querySelector("#dream-template");
     const clone = template.content.cloneNode(true);
 
@@ -172,7 +201,22 @@ function createDream(dream) {
     const p = a.querySelector(".dreams__dream-day__dream__story");
     p.textContent = dream.story;
 
-    dreamsContainer.appendChild(clone);
+    div.appendChild(clone);
+}
+
+function createDummyDream(div) {
+    const template = document.querySelector("#dream-template");
+    const clone = template.content.cloneNode(true);
+
+    const a = clone.querySelector(".dreams__dream-day__dream");
+
+    const h1 = a.querySelector(".dreams__dream-day__dream__title");
+    h1.textContent = "No dreams were added that day...";
+
+    const p = a.querySelector(".dreams__dream-day__dream__story");
+    p.textContent = "If you remember your dream add it!";
+
+    div.appendChild(clone);
 }
 
 document.querySelector('.prev').addEventListener('click', () => {
@@ -187,3 +231,7 @@ document.querySelector('.next').addEventListener('click', () => {
 
 renderCalendar();
 fetchDreamsByDate();
+
+if (window.sessionStorage.getItem('dateVal')) {
+    showCalendar();
+}

@@ -17,9 +17,4 @@ class DefaultController extends AppController
             $this->render('onboarding');
         }
     }
-
-    public function dream()
-    {
-        $this->render('dream');
-    }
 }

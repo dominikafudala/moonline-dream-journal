@@ -86,7 +86,7 @@ class DreamRepository extends Repository
         $userID = $this->getUserId();
 
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.dreams WHERE "userID" = :user ORDER BY "dreamID" DESC;
+            SELECT * FROM public.dreams WHERE "userID" = :user ORDER BY date DESC, "dreamID" DESC;
         ');
         $stmt->bindParam(':user', $userID, PDO::PARAM_INT);
         $stmt->execute();
@@ -101,6 +101,63 @@ class DreamRepository extends Repository
         }
 
         return $result;
+    }
+
+    public function deleteDream($id){
+        $stmt = $this->database->connect()->prepare('
+            DELETE FROM public.dreams WHERE "dreamID" = :id;
+        ');
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function getMoonphaseFromDate($date) : int{
+        $dateArray = explode("-", $date);
+        $y = $dateArray[0];
+        $m = $dateArray[1];
+        $d = $dateArray[2];
+
+        $phases = ['new_moon', 'waxing_crescent', 'first_quarter', 'waxing_gibbous', 'full_moon', 'waning_gibbous', 'last_quarter', 'waning_crescent'];
+
+        if ($m <= 3) {
+            $y--;
+            $m += 12;
+        }
+
+        $c = 365.25 * $y;
+        $e = 30.6 * $m;
+        $jd = $c + $e + $d - 694039.09;
+        $jd /= 29.5305882;
+        $b = intval($jd);
+        $jd -= $b;
+        $b = round($jd * 8);
+
+        if ($b >= 8) $b = 0;
+
+        $chosenMoon = $phases[$b];
+
+        $stmt = $this->database->connect()->prepare('
+            SELECT "moonphaseID" FROM moonphases
+            WHERE name = :moon
+            limit 1
+        ');
+        $stmt->bindParam(':moon', $chosenMoon);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
+    public function getMoonphaseFromId($id): array{
+        $stmt = $this->database->connect()->prepare('
+            SELECT name, "imgUrl" FROM moonphases
+            WHERE "moonphaseID" = :id
+            limit 1
+        ');
+
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+
+        $moon= $stmt->fetch(PDO::FETCH_ASSOC);
+        return [$moon['name'], $moon['imgUrl']];
     }
 
     private function getUserId(): int{

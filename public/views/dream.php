@@ -38,7 +38,7 @@
             <?php endforeach; ?>
         </div>
         <div class="dream-info__moon">
-            <img src="/public/img/moon_phases/first_quarter.svg" alt="first quarter">
+            <img src="<?= $moon[1] ?>" alt="<?= $moon[0] ?>">
         </div>
         <div class="dream-info__title">
             <h1><?= $dream->getTitle(); ?></h1>

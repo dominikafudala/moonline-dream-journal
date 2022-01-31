@@ -4,6 +4,10 @@
     margin: 24px auto 0;
 }
 
+.calendar.--inactive {
+    display: none;
+}
+
 .calendar__nav {
     display: flex;
     justify-content: space-between;
@@ -106,4 +110,29 @@
     border: 2px solid var(--purple-primary-500);
     border-radius: 4px;
     z-index: -1;
+}
+
+@media(min-width: 992px) and (min-height: 652px) {
+    .calendar.--desktop {
+        display: block;
+    }
+
+    .toggle {
+        display: none;
+    }
+
+    .calendar-desktop-wrapper {
+        position: fixed;
+        width: 100%;
+        max-width: 1000px;
+        top: 200px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: -1;
+    }
+
+    .calendar {
+        margin: 0;
+        margin-left: 24px;
+    }
 }

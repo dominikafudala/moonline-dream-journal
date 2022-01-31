@@ -6,12 +6,10 @@ function isValidEmail(email) {
     return /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/.test(email);
 }
 
-//TODO: validate length, characters in password
 function isValidPassword(password1, password2) {
     return password1 === password2;
 }
 
-//TODO: create error-class in css and add to invalid inputs
 function markValidation(element, condition) {
     !condition ? element.classList.add('not-valid') : element.classList.remove('not-valid');
 }
